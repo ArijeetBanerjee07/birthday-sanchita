@@ -1,0 +1,413 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Sanchita 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #ffdee9 0%, #b5fffc 100%);
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      color: #333;
+      transition: 0.8s;
+    }
+
+    .container {
+      position: relative;
+      top: 25%;
+      transform: translateY(-25%);
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #ff4e88;
+      animation: pop 1s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    button {
+      background-color: #ff4e88;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      margin-top: 20px;
+      margin-right: 10px;
+      transition: 0.3s;
+    }
+    
+    button:hover {
+      transform: scale(1.1);
+      background-color: #ff7096;
+    }
+
+    .gallery {
+      margin-top: 40px;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+    
+    .gallery.show {
+      opacity: 1;
+    }
+    
+    .photos img {
+      width: 200px;
+      height: 200px;
+      margin: 10px;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.5s;
+    }
+    
+    .photos img:hover {
+      transform: scale(1.1);
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+    
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 60px;
+      height: 80px;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: float 10s linear infinite;
+    }
+    
+    .red { background: #ff6b81; left: 10%; }
+    .blue { background: #74b9ff; left: 50%; animation-delay: 2s; }
+    .yellow { background: #ffeaa7; left: 80%; animation-delay: 4s; }
+    
+    @keyframes float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-110vh); }
+    }
+    
+    @keyframes fly {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-80px); opacity: 0; }
+    }
+    
+    body.night {
+      background: radial-gradient(#0b132b, #1c2541) !important;
+      color: #fff;
+    }
+    
+    body.night h1,
+    body.night p,
+    body.night .message {
+      color: #fff;
+    }
+    
+    body.night button {
+      background-color: #00d4ff;
+    }
+    
+    body.night button:hover {
+      background-color: #00a8cc;
+    }
+
+    /* STAGE MODE STYLES */
+    .stage-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s, visibility 0.8s;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stage-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Stage lights */
+    .stage-light {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.6;
+    }
+
+    .stage-light.left {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255, 100, 150, 0.8), transparent);
+      top: -100px;
+      left: -100px;
+      animation: stageFlicker 0.15s infinite;
+    }
+
+    .stage-light.right {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(100, 150, 255, 0.8), transparent);
+      top: -100px;
+      right: -100px;
+      animation: stageFlicker 0.15s infinite 0.08s;
+    }
+
+    @keyframes stageFlicker {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Spotlight that follows */
+    .stage-overlay.active::before {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.4), transparent 70%);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: spotlightPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes spotlightPulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+    }
+
+    .stage-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      color: #fff;
+      animation: stageAppear 1s ease-out;
+    }
+
+    @keyframes stageAppear {
+      0% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .stage-content h1 {
+      font-size: 4rem;
+      color: #ffd700;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+      margin: 0;
+      animation: stageTitleGlow 1.5s ease-out;
+    }
+
+    @keyframes stageTitleGlow {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px);
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+      }
+    }
+
+    .stage-content p {
+      font-size: 1.5rem;
+      margin: 20px 0 40px;
+      animation: slideIn 1s ease-out 0.3s both;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .stage-exit {
+      background-color: #ffd700;
+      color: #000;
+      font-weight: bold;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+      animation: slideIn 1s ease-out 0.6s both;
+    }
+
+    .stage-exit:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <div class="balloon red"></div>
+  <div class="balloon blue"></div>
+  <div class="balloon yellow"></div>
+  
+  <div class="container">
+    <h1>🎈 Happy Birthday <span>DIDI!</span> 🎂</h1>
+    <p class="message">Wishing you all the smiles, sparkles, and surprises you deserve 💖</p>
+    
+    <button id="surpriseBtn">Enjoy the Show 🎭</button>
+    <button id="toggleMode">🌙 Night Mode</button>
+    
+    <div class="gallery hidden">
+      <h2>✨ Happy Birthday Siss...aro boro ho and jibone bhalo chakri kor and next year bhalo hok healthy hok and joldi poisa kama and amar upor khorcha kor he he he.... ✨</h2>
+      <div class="photos">
+        <img src="images/1.jpg" alt="Memory 1">
+        <img src="images/2.jpg" alt="Memory 2">
+        <img src="images/3.jpg" alt="Memory 3">
+      </div>
+    </div>
+  </div>
+
+  <!-- Stage Mode Overlay -->
+  <div id="stageOverlay" class="stage-overlay">
+    <div class="stage-light left"></div>
+    <div class="stage-light right"></div>
+    <div class="stage-content" role="dialog" aria-label="Stage mode for Sanchita">
+      <h1>🌟 Presenting... DIDI! 🌟</h1>
+      <p>🌠 You are a Future Star 🌠</p>
+      <button id="exitStage" class="stage-exit">Take a Bow / Exit</button>
+    </div>
+  </div>
+
+  <canvas id="confetti"></canvas>
+  <audio id="music" src="birthday.mp3"></audio>
+  <audio id="audience" src="audience.mp3"></audio>
+
+  <script>
+    const btn = document.getElementById("surpriseBtn");
+    const stageBtn = document.getElementById("stageBtn");
+    const gallery = document.querySelector(".gallery");
+    const music = document.getElementById("music");
+    const stageOverlay = document.getElementById("stageOverlay");
+    const exitStageBtn = document.getElementById("exitStage");
+
+    // Main surprise click
+    btn.addEventListener("click", () => {
+      music.play();
+      const audienceAudio = document.getElementById("audience");
+      audienceAudio.play();
+      gallery.classList.remove("hidden");
+      setTimeout(() => gallery.classList.add("show"), 200);
+      launchConfetti();
+      stageOverlay.classList.add("active");
+      btn.disabled = true;
+    });
+
+    // Exit Stage Mode
+    exitStageBtn.addEventListener("click", () => {
+      stageOverlay.classList.remove("active");
+    });
+
+    // Click anywhere on stage to exit (optional)
+    stageOverlay.addEventListener("click", (e) => {
+      if (e.target === stageOverlay) {
+        stageOverlay.classList.remove("active");
+      }
+    });
+
+    // Floating hearts on click
+    document.addEventListener("click", (e) => {
+      if (e.target.id !== "exitStage" && !stageOverlay.classList.contains("active")) {
+        const heart = document.createElement("div");
+        heart.textContent = "💖";
+        heart.style.position = "absolute";
+        heart.style.left = e.pageX + "px";
+        heart.style.top = e.pageY + "px";
+        heart.style.fontSize = "24px";
+        heart.style.animation = "fly 1.5s ease-out";
+        heart.style.pointerEvents = "none";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1500);
+      }
+    });
+
+    // Night mode toggle
+    document.getElementById("toggleMode").onclick = () => {
+      document.body.classList.toggle("night");
+    };
+
+    // Confetti function
+    function launchConfetti() {
+      const canvas = document.getElementById('confetti');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const pieces = [];
+      for (let i = 0; i < 150; i++) {
+        pieces.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height - canvas.height,
+          size: Math.random() * 8 + 2,
+          color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+          speed: Math.random() * 3 + 2
+        });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(p => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        });
+      }
+
+      function update() {
+        pieces.forEach(p => {
+          p.y += p.speed;
+          if (p.y > canvas.height) p.y = 0;
+        });
+      }
+
+      function loop() {
+        draw();
+        update();
+        requestAnimationFrame(loop);
+      }
+      loop();
+    }
+  </script>
+</body>
+</html>

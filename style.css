@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffdee9 0%, #b5fffc 100%);
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  color: #333;
+}
+
+.container {
+  position: relative;
+  top: 25%;
+  transform: translateY(-25%);
+}
+
+h1 {
+  font-size: 3rem;
+  color: #ff4e88;
+  animation: pop 1s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+button {
+  background-color: #ff4e88;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+button:hover {
+  transform: scale(1.1);
+  background-color: #ff7096;
+}
+
+.gallery {
+  margin-top: 40px;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+.gallery.show {
+  opacity: 1;
+}
+.photos img {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.5s;
+}
+.photos img:hover {
+  transform: scale(1.1);
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.hidden {
+  display: none;
+}
+.balloon {
+  position: absolute;
+  bottom: -150px;
+  width: 60px; height: 80px;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: float 10s linear infinite;
+}
+.red {background:#ff6b81; left:10%;}
+.blue {background:#74b9ff; left:50%; animation-delay:2s;}
+.yellow {background:#ffeaa7; left:80%; animation-delay:4s;}
+@keyframes float {
+  0% {transform:translateY(0);}
+  100% {transform:translateY(-110vh);}
+}
+@keyframes fly {
+  from {transform:translateY(0); opacity:1;}
+  to {transform:translateY(-80px); opacity:0;}
+}
+.night {
+  background: radial-gradient(#0b132b,#1c2541);
+  color:#fff;
+  transition:0.5s;
+}
