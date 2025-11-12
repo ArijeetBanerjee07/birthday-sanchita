@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +26,46 @@
       font-size: 3rem;
       color: #ff4e88;
       animation: pop 1s ease;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .message {
+        font-size: 1rem;
+      }
+      
+      button {
+        padding: 12px 24px;
+        font-size: 1rem;
+        margin-top: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .message {
+        font-size: 0.9rem;
+      }
+      
+      button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+      
+      .gallery {
+        margin-top: 30px;
+      }
+      
+      .photos img {
+        width: 150px;
+        height: 150px;
+      }
     }
 
     @keyframes pop {
@@ -246,6 +285,45 @@
       font-size: 1.5rem;
       margin: 20px 0 40px;
       animation: slideIn 1s ease-out 0.3s both;
+    }
+
+    @media (max-width: 768px) {
+      .stage-content h1 {
+        font-size: 2.5rem;
+      }
+      
+      .stage-content p {
+        font-size: 1.2rem;
+        margin: 15px 0 30px;
+      }
+      
+      .stage-light.left,
+      .stage-light.right {
+        width: 200px;
+        height: 200px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stage-content h1 {
+        font-size: 1.8rem;
+      }
+      
+      .stage-content p {
+        font-size: 1rem;
+        margin: 10px 0 20px;
+      }
+      
+      .stage-exit {
+        padding: 12px 30px;
+        font-size: 1rem;
+      }
+      
+      .stage-light.left,
+      .stage-light.right {
+        width: 150px;
+        height: 150px;
+      }
     }
 
     @keyframes slideIn {
